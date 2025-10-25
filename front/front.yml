@@ -1,0 +1,11 @@
+# Common configuration for the Front service
+spring:
+  application:
+    name: front-service
+server:
+  port: 8080
+
+# Disable eureka client for front service
+eureka:
+  client:
+    enabled: false

@@ -1,0 +1,11 @@
+# Common configuration for the Coupon service
+spring:
+  application:
+    name: coupon-service
+server:
+  port: 8083
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true

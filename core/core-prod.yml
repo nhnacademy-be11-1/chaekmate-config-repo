@@ -1,0 +1,11 @@
+# Production specific configuration for the Core service
+spring:
+  datasource:
+    url: jdbc:mysql://prod-db-host:3306/core_db
+    username: core_user
+    password: ${DB_PASSWORD} # Use environment variables for secrets
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false

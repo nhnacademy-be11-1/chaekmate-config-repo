@@ -1,0 +1,17 @@
+# Common configuration for the API Gateway service
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # Enable service discovery based routing
+          lower-case-service-id: true
+server:
+  port: 8000
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true

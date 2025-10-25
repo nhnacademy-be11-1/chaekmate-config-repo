@@ -1,0 +1,11 @@
+# Production specific global configurations
+# For example, logging level
+logging:
+  level:
+    root: INFO
+
+# Override eureka url for production if needed
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-prod.chaekmate.com:8761/eureka/

@@ -1,0 +1,7 @@
+# Development specific configuration for the Batch service
+spring:
+  datasource:
+    url: jdbc:h2:mem:batch-db;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver

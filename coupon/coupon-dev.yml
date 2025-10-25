@@ -1,0 +1,11 @@
+# Development specific configuration for the Coupon service
+spring:
+  datasource:
+    url: jdbc:h2:mem:coupon-db;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true

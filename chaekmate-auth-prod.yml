@@ -1,23 +1,13 @@
 # 원본의 공통 + prod 프로필
 spring:
   application:
-    name: chaekmate-core
-
-  rabbitmq:
-    host: ${RABBITMQ_HOST}
-    port: ${RABBITMQ_PORT}
-    username: ${RABBITMQ_USERNAME}
-    password: ${RABBITMQ_PASSWORD}
-
+    name: chaekmate-auth
   data:
     redis:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
-      database: ${REDIS_RANGE}
       password: ${REDIS_PASSWORD}
-
-  config:
-    import: "optional:configserver:"    # configserver import 활성화
+      database: ${REDIS_RANGE}
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -38,47 +28,30 @@ spring:
   jpa:
     hibernate:
       # create , update 금지 , prod 에선 None 고려
-      ddl-auto: none
-    show-sql: false # 운영 환경에서 SQL 표시 끄기
+      ddl-auto: validate # validate 로 수정 (전체 entity  수정 후)
+    show-sql: false
     properties:
       hibernate:
         format_sql: false
         use_sql_comments: false
         highlight_sql: false
-    open-in-view: false # OSIV 설정 ( 디폴트 true )
+    open-in-view: false
     database-platform: org.hibernate.dialect.MySQLDialect
-
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    enabled: true
 
 eureka:
   client:
-    service-url:
-      defaultZone: ${EUREKA_URL_PROD}
     register-with-eureka: true
     fetch-registry: true
-    registry-fetch-interval-seconds: 30
+    service-url:
+      defaultZone: ${EUREKA_URL_PROD}
+    healthcheck:
+      enabled: true
 
   instance:
     prefer-ip-address: true
     lease-renewal-interval-in-seconds: 30
     lease-expiration-duration-in-seconds: 90
 
-aladin:
-  api:
-    base-url: http://www.aladin.co.kr/ttb/api
-    key: ${ALADIN_API_KEY}
-
-toss:
-  api:
-    url: https://api.tosspayments.com/v1
-  secret-key: ${TOSS_SECRET_KEY}
-
-# Spring Boot Actuator 서버 상태(헬스) 모니터링
 management:
   endpoints:
     web:
@@ -93,11 +66,22 @@ management:
 info:
   instanceId: ${spring.application.name}:${server.port}
 
-rabbitmq:
-  exchange:
-    name: cm-book-exchange
-  queues:
-    queueNameOdd: cm-book-1 # cm-book-2, cm-book-3
-    routingKeyOdd: cm-book-key-1
-    queueNameEven: cm-book-2 # cm-book-key-2, cm-book-key-3
-    routingKeyEven: cm-book-key-2
+
+jwt:
+  secret: ${JWT_SECRET_KEY}
+  access:
+    exp: ${ACCESS_TOKEN_EXPIRED_AT:3600}
+  refresh:
+    exp: ${REFRESH_TOKEN_EXPIRED_AT:259200}
+
+# PAYCO OAuth 설정
+payco:
+  oauth:
+    client-id: ${PAYCO_CLIENT_ID}
+    client-secret: ${PAYCO_CLIENT_SECRET}
+    redirect-uri: ${PAYCO_REDIRECT_URI}
+
+# Dooray Webhook 설정
+dooray:
+  webhook:
+    url: ${DOORAY_WEBHOOK_URL}

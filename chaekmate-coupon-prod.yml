@@ -1,0 +1,93 @@
+# 원본의 공통 + prod 프로필
+spring:
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?characterEncoding=UTF-8
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+    # DBCP2 설정 (커넥션 풀)
+    type: org.apache.commons.dbcp2.BasicDataSource
+    dbcp2:
+      max-total: 10
+      min-idle: 2
+      validation-query: SELECT 1
+      test-on-borrow: true
+
+  jpa:
+    hibernate:
+      # create , update 금지 , prod 에선 None 고려
+      ddl-auto: none # validate 로 수정 (전체 entity  수정 후)
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        highlight_sql: false
+    open-in-view: false
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+
+  application:
+    name: chaekmate-coupon
+
+
+    rabbitmq:
+      host: ${RABBITMQ_HOST}
+      port: ${RABBITMQ_PORT}
+      username: ${RABBITMQ_USERNAME}
+      password: ${RABBITMQ_PASSWORD}
+
+    data:
+      redis:
+        host: ${REDIS_HOST}
+        password: ${REDIS_PASSWORD}
+        port: ${REDIS_PORT}
+        database: ${REDIS_RANGE:304}
+
+  springdoc:
+    api-docs:
+      path: /v3/api-docs
+    swagger-ui:
+      path: /swagger-ui.html
+      enabled: true
+
+
+
+eureka:
+  client:
+
+    fetch-registry: true
+    register-with-eureka: true
+
+    service-url:
+      defaultZone: ${EUREKA_URL_PROD}
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+
+
+jdbc-template-batch-size: ${JDBC_BATCH_SIZE:100}
+
+
+
+# Spring Boot Actuator 서버 상태(헬스) 모니터링
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    db:
+      enabled: true
+    redis:
+      enabled: false
+    rabbit:
+      enabled: true
+  info:
+    env:
+      enabled: true
+info:
+  instanceId: ${spring.application.name}:${server.port}

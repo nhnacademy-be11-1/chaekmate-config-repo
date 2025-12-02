@@ -1,15 +1,76 @@
-# Gateway/Target Server Port (prod) : "배포설명" 확인
+# 원본의 공통 + prod 프로필
 
 # Gateway Server Port
 server:
   port: ${PORT_NUMBER}
 
-# Target Server (Eureka Server) URL
+spring:
+  application:
+    name: chaekmate-gateway
+
+  # 추후 라우팅 경로 수정 필요
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: chaekmate-auth
+              uri: lb://chaekmate-auth
+              predicates:
+                - Path=/auth/**
+
+            - id: chaekmate-batch
+              uri: lb://chaekmate-batch
+              predicates:
+                - Path=/batch/**
+
+            - id: chaekmate-core
+              uri: lb://chaekmate-core
+              predicates:
+                - Path=/books/**, /carts/**, /categories/**, /delivery-policy/**, /likes/**, /members/**, /point-policies/**, /tags/**, /wrappers/**, /payments/**, /orders/**, /reviews/**
+
+            - id: chaekmate-core-admin
+              uri: lb://chaekmate-core
+              predicates:
+                - Path=/admin/books/**, /admin/categories/**, /admin/delivery-policy/**, /admin/point-policies/**, /admin/tags/**, /admin/wrappers/**, /admin/point-histories/**, /admin/grades/**
+
+            - id: chaekmate-coupon
+              uri: lb://chaekmate-coupon
+              predicates:
+                - Path=/coupon/**, /admin/coupon-policies/**, /coupon-policies/**, /issued-coupons/**
+
+            - id: chaekmate-search
+              uri: lb://chaekmate-search
+              predicates:
+                - Path=/search/**
+
 eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URL_PROD}
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 30
+
+    healthcheck:
+      enabled: true
+
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
 
 logging:
   level:
-    root: info
+    root: warn
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+info:
+  instanceId: ${spring.application.name}:${server.port}

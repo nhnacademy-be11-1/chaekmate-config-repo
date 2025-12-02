@@ -1,5 +1,0 @@
-# Production specific configuration for the Search service
-spring:
-  data:
-    elasticsearch:
-      cluster-nodes: es-prod-node1:9200,es-prod-node2:9200

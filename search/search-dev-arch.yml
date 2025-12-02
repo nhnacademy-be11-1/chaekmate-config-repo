@@ -1,5 +1,0 @@
-# Development specific configuration for the Search service
-spring:
-  data:
-    elasticsearch:
-      cluster-nodes: localhost:9200

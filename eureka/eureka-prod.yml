@@ -1,5 +1,0 @@
-# Production specific configuration for the Eureka Discovery service
-# In production, you might have a peer-aware setup
-eureka:
-  instance:
-    hostname: eureka-prod.chaekmate.com

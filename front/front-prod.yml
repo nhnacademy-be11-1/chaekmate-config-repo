@@ -1,3 +1,0 @@
-# Production specific configuration for the Front service
-server:
-  port: 80 # Standard http port for production

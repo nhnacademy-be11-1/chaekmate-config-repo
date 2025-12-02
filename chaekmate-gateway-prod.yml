@@ -62,7 +62,7 @@ eureka:
 
 logging:
   level:
-    root: warn
+    root: info
 
 management:
   endpoints:
@@ -76,4 +76,4 @@ management:
     env:
       enabled: true
 info:
-  instanceId: ${spring.application.name}:${server.port}
+  instanceId: ${spring.application.name:chaekmate-gateway}:${server.port:10312}

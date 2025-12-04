@@ -55,20 +55,6 @@ spring:
 
 
 
-eureka:
-  client:
-
-    fetch-registry: true
-    register-with-eureka: true
-
-    service-url:
-      defaultZone: ${EUREKA_URL_PROD}
-  instance:
-    prefer-ip-address: true
-    lease-renewal-interval-in-seconds: 30
-    lease-expiration-duration-in-seconds: 90
-
-
 jdbc-template-batch-size: ${JDBC_BATCH_SIZE:100}
 
 

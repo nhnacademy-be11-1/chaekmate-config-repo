@@ -79,12 +79,3 @@ management:
       enabled: true
 info:
   instanceId: ${spring.application.name}:${server.port}
-
-rabbitmq:
-  exchange:
-    name: cm-book-exchange
-  queues:
-    queueNameOdd: cm-book-1 # cm-book-2, cm-book-3
-    routingKeyOdd: cm-book-key-1
-    queueNameEven: cm-book-2 # cm-book-key-2, cm-book-key-3
-    routingKeyEven: cm-book-key-2

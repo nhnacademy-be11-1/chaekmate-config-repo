@@ -55,19 +55,6 @@ springdoc:
     path: /swagger-ui.html
     enabled: true
 
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_URL_PROD}
-    register-with-eureka: true
-    fetch-registry: true
-    registry-fetch-interval-seconds: 30
-
-  instance:
-    prefer-ip-address: true
-    lease-renewal-interval-in-seconds: 30
-    lease-expiration-duration-in-seconds: 90
-
 aladin:
   api:
     base-url: http://www.aladin.co.kr/ttb/api

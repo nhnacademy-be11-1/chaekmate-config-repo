@@ -38,20 +38,6 @@ spring:
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQLDialect
 
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: ${EUREKA_URL_PROD}
-    healthcheck:
-      enabled: true
-
-  instance:
-    prefer-ip-address: true
-    lease-renewal-interval-in-seconds: 30
-    lease-expiration-duration-in-seconds: 90
-
 management:
   endpoints:
     web:
